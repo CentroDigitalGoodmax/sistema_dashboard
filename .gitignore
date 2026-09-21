@@ -1,0 +1,5 @@
+# Common ignores
+.well-known
+.user.ini
+.env
+.DS_Store

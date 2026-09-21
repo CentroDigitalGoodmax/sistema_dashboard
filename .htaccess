@@ -1,0 +1,54 @@
+RewriteEngine On
+
+Options -Indexes
+RewriteRule (^|/)\. - [F,L]
+
+# Bloquear archivos sensibles
+<FilesMatch "(^\.|\.env|\.ini$|\.log$|\.sql$|\.sqlite$|\.sqlite3$|\.bak$|\.backup$|\.old$|\.orig$|\.save$|\.swp$|\.tmp$|\.conf$|\.config$|\.dist$|\.example$)">
+    Require all denied
+</FilesMatch>
+
+# Bloquear archivos de dependencias/configuración
+<FilesMatch "^(composer\.(json|lock)|package(-lock)?\.json|yarn\.lock|pnpm-lock\.yaml|phpunit\.xml|Dockerfile|docker-compose.*|\.htpasswd)$">
+    Require all denied
+</FilesMatch>
+
+# Bloquear extensiones sensibles
+RewriteRule \.(env|ini|log|sql|sqlite|sqlite3|bak|backup|old|orig|save|swp|tmp|conf|config|dist|example)$ - [F,L,NC]
+
+
+# ---------------------------------------------
+# RUTAS PÚBLICAS SIN LOGIN
+# ---------------------------------------------
+
+RewriteRule ^$ /config/config.php [L,QSA]
+RewriteRule ^acceso$ /view/acceso.php [L,QSA]
+RewriteRule ^auth/([^/]+)$ /models/auth/$1.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^api/([^/]+)$ /api/$1.php [L,QSA]
+
+# ---------------------------------------------
+# RUTAS PÚBLICAS CON LOGIN
+# ---------------------------------------------
+
+RewriteRule ^mi/models/([^/]+)$ /models/mi/$1.php [L,QSA]
+RewriteRule ^mi/([^/]+)$ /view/$1.php [L,QSA]
+
+
+# =========================================================
+# HEADERS DE SEGURIDAD
+# =========================================================
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+ErrorDocument 400 /view/errores/400.php
+ErrorDocument 401 /view/errores/401.php
+ErrorDocument 403 /view/errores/403.php
+ErrorDocument 404 /view/errores/404.php
+ErrorDocument 500 /view/errores/500.php
+ErrorDocument 503 /view/errores/503.php

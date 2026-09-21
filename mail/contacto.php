@@ -12,13 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // Configuración del servidor de correo
-define('SMTP_HOST', 'mail.argenmedicalresidencia.com');
+define('SMTP_HOST', 'mail.**************.com');
 define('SMTP_PORT', 465);
-define('SMTP_USER', 'contacto@argenmedicalresidencia.com');
-define('SMTP_PASS', '1fvy%2f8@e@%');
-define('SMTP_FROM', 'contacto@argenmedicalresidencia.com');
+define('SMTP_USER', 'contacto@**********.com');
+define('SMTP_PASS', '***************');
+define('SMTP_FROM', 'contacto@************.com');
 define('SMTP_FROM_NAME', 'Contacto web - Argen Medical');
-define('SMTP_TO', 'argenmedical.residencia@gmail.com');
+define('SMTP_TO', '**************@gmail.com');
 define('SMTP_TO_NAME', 'Argen Medical');
 
 // Verificar que sea método POST
